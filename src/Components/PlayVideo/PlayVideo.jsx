@@ -12,7 +12,8 @@ import { data } from 'react-router-dom'
 
 export const PlayVideo = ({videoId}) => {
   const [apiData, setApiData] = useState(null);
-  const [channelData, setChannelData] = useState(null)
+  const [channelData, setChannelData] = useState(null);
+  const [commentData, setCommentData] = useState([])
 
   const fetchVideoData = async () => {
     //fetching Video data
@@ -30,9 +31,11 @@ export const PlayVideo = ({videoId}) => {
     .then(data => setChannelData(data.items[0]))
 
     //fetching comment url
-    const commentDataUrl = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${import.meta.env.VITE_YOUTUBE_API}`
+    const commentDataUrl = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${videoId}&key=${import.meta.env.VITE_YOUTUBE_API}`
+
     await fetch(commentDataUrl)
-    .then()
+    .then(res  => res.json())
+    .then(data => setCommentData(data.items))
   }
 
   useEffect(() => {
@@ -77,83 +80,23 @@ export const PlayVideo = ({videoId}) => {
         <p>Subscribe {apiData ? apiData.snippet.channelTitle : 'Channel Title'} to watch more</p>
         <hr />
         <h4>{formatViewCount(apiData ? apiData.statistics.commentCount : '24')}</h4>
-        <div className="comments">
-          <img src={user_profile} alt="user" />
-          <div>
-            <h3>Jack Nicholson <span>! day ago</span></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, amet quo in magnam ratione est. Placeat deleniti iusto minima cupiditate?</p>
-            <div className="comment-action">
-              <img src={like} alt="like" />
-              <span>244</span>
-              <img src={dislike} alt="dislike" />
+        {commentData && commentData.map((item, index) => {
+          return(
+          <div className="comments" key={index}>
+            <img src={item.snippet.topLevelComment.snippet.authorProfileImageUrl} alt="user" />
+            <div>
+              <h3>{item.snippet.topLevelComment.snippet.authorDisplayName} <span>{getRelativeTime(item.snippet.topLevelComment.snippet.publishedAt)}</span></h3>
+              <p>{item.snippet.topLevelComment.snippet.textDisplay}</p>
+              <div className="comment-action">
+                <img src={like} alt="like" />
+                <span>{formatViewCount(item.snippet.topLevelComment.snippet.likeCount)}</span>
+                <img src={dislike} alt="dislike" />
+              </div>
             </div>
           </div>
-        </div>
+        )})}
 
-        <div className="comments">
-          <img src={user_profile} alt="user" />
-          <div>
-            <h3>Jack Nicholson <span>! day ago</span></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, amet quo in magnam ratione est. Placeat deleniti iusto minima cupiditate?</p>
-            <div className="comment-action">
-              <img src={like} alt="like" />
-              <span>244</span>
-              <img src={dislike} alt="dislike" />
-            </div>
-          </div>
-        </div>
-
-        <div className="comments">
-          <img src={user_profile} alt="user" />
-          <div>
-            <h3>Jack Nicholson <span>! day ago</span></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, amet quo in magnam ratione est. Placeat deleniti iusto minima cupiditate?</p>
-            <div className="comment-action">
-              <img src={like} alt="like" />
-              <span>244</span>
-              <img src={dislike} alt="dislike" />
-            </div>
-          </div>
-        </div>
-
-        <div className="comments">
-          <img src={user_profile} alt="user" />
-          <div>
-            <h3>Jack Nicholson <span>! day ago</span></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, amet quo in magnam ratione est. Placeat deleniti iusto minima cupiditate?</p>
-            <div className="comment-action">
-              <img src={like} alt="like" />
-              <span>244</span>
-              <img src={dislike} alt="dislike" />
-            </div>
-          </div>
-        </div>
-
-        <div className="comments">
-          <img src={user_profile} alt="user" />
-          <div>
-            <h3>Jack Nicholson <span>! day ago</span></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, amet quo in magnam ratione est. Placeat deleniti iusto minima cupiditate?</p>
-            <div className="comment-action">
-              <img src={like} alt="like" />
-              <span>244</span>
-              <img src={dislike} alt="dislike" />
-            </div>
-          </div>
-        </div>
-
-        <div className="comments">
-          <img src={user_profile} alt="user" />
-          <div>
-            <h3>Jack Nicholson <span>! day ago</span></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, amet quo in magnam ratione est. Placeat deleniti iusto minima cupiditate?</p>
-            <div className="comment-action">
-              <img src={like} alt="like" />
-              <span>244</span>
-              <img src={dislike} alt="dislike" />
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
   )
