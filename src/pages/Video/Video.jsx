@@ -9,7 +9,7 @@ export const Video = () => {
   return (
     <div className='play-container'>
       <PlayVideo videoId={videoId}/>
-      <Recommended categoryId={categoryId}/>
+      <Recommended categoryId={categoryId} videoId={videoId}/>
     </div>
   )
 }

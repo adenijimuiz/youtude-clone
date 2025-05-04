@@ -8,9 +8,10 @@ import save from '../../assets/save.png'
 import jack from '../../assets/jack.png'
 import user_profile from '../../assets/user_profile.jpg'
 import {formatViewCount, getRelativeTime} from '../../converter'
-import { data } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
-export const PlayVideo = ({videoId}) => {
+export const PlayVideo = () => {
+  const {videoId} = useParams()
   const [apiData, setApiData] = useState(null);
   const [channelData, setChannelData] = useState(null);
   const [commentData, setCommentData] = useState([])
@@ -40,7 +41,7 @@ export const PlayVideo = ({videoId}) => {
 
   useEffect(() => {
     fetchVideoData()
-  }, [])
+  }, [videoId])
 
   useEffect(() => {
     // fetchOtherData()
