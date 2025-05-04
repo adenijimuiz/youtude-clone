@@ -61,26 +61,26 @@ export const Sidebar = ({sidebar, category, setCategory}) => {
 
       <div className="subscribed-list">
           <h3>Subscribed</h3>
-          <div className="side-link">
+          <a href='https://github.com/adenijimuiz' className="side-link">
             <img src={jack} alt="jack" />
             <p>PewDiePie</p>
-          </div>
-          <div className="side-link">
+          </a>
+          <a href='https://github.com/adenijimuiz' className="side-link">
             <img src={simon} alt="simon" />
             <p>MrBeast</p>
-          </div>
-          <div className="side-link">
+          </a>
+          <a href='https://github.com/adenijimuiz' className="side-link">
             <img src={tom} alt="tom" />
             <p>Tom Tom</p>
-          </div>
-          <div className="side-link">
+          </a>
+          <a href='https://github.com/adenijimuiz' className="side-link">
             <img src={megan} alt="megan" />
             <p>5-Minute Crafts</p>
-          </div>
-          <div className="side-link">
+          </a>
+          <a href='https://github.com/adenijimuiz' className="side-link">
             <img src={cameron} alt="cameron" />
             <p>Nas Daily</p>
-          </div>
+          </a>
         </div>
     </div>
   )
